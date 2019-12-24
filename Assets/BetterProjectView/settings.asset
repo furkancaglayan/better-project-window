@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2690193efe0b3434981867b443ea5e50, type: 3}
+  m_Name: settings
+  m_EditorClassIdentifier: 
+  _pairs:
+  - _folderName: Blue
+    _color: {r: 0.2352941, g: 0.36714014, b: 1, a: 1}
+  - _folderName: Red
+    _color: {r: 0.97794116, g: 0.25167605, b: 0.328, a: 1}
+  - _folderName: Yellow
+    _color: {r: 0.8235294, g: 0.6985801, b: 0, a: 1}
+  - _folderName: Violet
+    _color: {r: 0.7475657, g: 0.03676468, b: 1, a: 1}
+  - _folderName: Green
+    _color: {r: 0.2516761, g: 0.97794116, b: 0.25668478, a: 1}
+  - _folderName: Gray
+    _color: {r: 0.35294116, g: 0.34775084, b: 0.3482963, a: 1}
+  - _folderName: New Folder
+    _color: {r: 0.919777, g: 1, b: 0.16911763, a: 1}
+  - _folderName: 
+    _color: {r: 0, g: 0, b: 0, a: 0}
+  _icon: {fileID: 2800000, guid: cdc26e0d6332413408e80762b1008b27, type: 3}
