@@ -72,6 +72,8 @@ namespace ProjectViewer
             if(_projectViewSettings._pairs!=null)
                 foreach (var VARIABLE in _projectViewSettings._pairs)
                 {
+                    if (string.IsNullOrEmpty(VARIABLE._folderName))
+                        continue;
                     if (VARIABLE._folderName.Equals(folderName))
                     {
                         Drawer(rect, _projectViewSettings._icon,VARIABLE._color, fileName);

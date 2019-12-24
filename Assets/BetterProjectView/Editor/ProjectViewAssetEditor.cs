@@ -37,9 +37,12 @@ public class ProjectViewAssetEditor : Editor {
             GUILayout.Label("Folder Color:", GUILayout.Width(120));
             projectViewSettings._pairs[i]._color = EditorGUILayout.ColorField(projectViewSettings._pairs[i]._color);
             GUILayout.EndHorizontal();
+            if (GUILayout.Button("Delete", EditorStyles.toolbarButton))
+                projectViewSettings._pairs.RemoveAt(i);
             GUILayout.EndVertical();
 
         }
+        GUILayout.Space(8);
 
         if (GUILayout.Button("Add Pair", EditorStyles.toolbarButton))
             projectViewSettings._pairs.Add(new ProjectViewer.Pair());
