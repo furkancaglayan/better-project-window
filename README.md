@@ -29,3 +29,12 @@ Go to Preferences/Project View+ window. Assign a **ProjectViewSettings** asset t
 
 ## 4-License
 This work is licensed under [MIT license](https://github.com/furkancaglayan/Detecting-Potentially-Hurtful-and-Toxic-Comments/blob/master/LICENSE).
+
+
+ 
+![](https://img.shields.io/github/release/furkancaglayan/better-project-window.svg) 
+![](https://img.shields.io/github/stars/furkancaglayan/better-project-window.svg) 
+![](https://img.shields.io/github/forks/furkancaglayan/better-project-window.svg) 
+![](https://img.shields.io/github/tag/furkancaglayan/better-project-window.svg) 
+![](https://img.shields.io/github/issues/furkancaglayan/better-project-window.svg) 
+<a href="https://opensource.org/licenses/MIT"> <img src="https://img.shields.io/badge/license-MIT-orange.svg" alt="license"></a>
