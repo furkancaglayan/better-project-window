@@ -6,9 +6,9 @@ namespace ProjectViewer
     [InitializeOnLoad]
     public class ProjectViewPreferences
     {
-        private static bool prefsLoaded = false;
-        public static ProjectViewSettings viewSettings;
-        public static bool showSizeInfo = false;
+        private static bool _loaded = false;
+        public static ProjectViewSettings ViewSettings;
+        public static bool ShowSizeInfo = false;
 
         public static string objectGuid;
 
@@ -23,15 +23,14 @@ namespace ProjectViewer
         {
             ProjectLoad();
 
-
-            GUILayout.Label("Version 1.00 ");
+            GUILayout.Label("Version 1.01");
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Settings: ",  GUILayout.Width(120));
-            viewSettings =
-                (ProjectViewSettings)EditorGUILayout.ObjectField(viewSettings, typeof(ProjectViewSettings), false);
-            if (viewSettings)
+            GUILayout.Label("Settings: ", GUILayout.Width(120));
+            ViewSettings =
+                (ProjectViewSettings)EditorGUILayout.ObjectField(ViewSettings, typeof(ProjectViewSettings), false);
+            if (ViewSettings)
             {
-                var path = AssetDatabase.GetAssetPath(viewSettings);
+                var path = AssetDatabase.GetAssetPath(ViewSettings);
                 objectGuid = AssetDatabase.AssetPathToGUID(path);
             }
 
@@ -39,12 +38,12 @@ namespace ProjectViewer
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Show Size Info: ", EditorStyles.miniLabel, GUILayout.Width(120));
-            showSizeInfo = GUILayout.Toggle(EditorPrefs.GetBool("showSizeInfo"), "");
+            ShowSizeInfo = GUILayout.Toggle(EditorPrefs.GetBool("showSizeInfo"), "");
             GUILayout.EndHorizontal();
 
             if (!GUI.changed) return;
             EditorPrefs.SetString("objectGuid", objectGuid);
-            EditorPrefs.SetBool("showSizeInfo", showSizeInfo);
+            EditorPrefs.SetBool("showSizeInfo", ShowSizeInfo);
         }
 
 
@@ -63,16 +62,13 @@ namespace ProjectViewer
 
         private static void ProjectLoad()
         {
-            if (!prefsLoaded)
+            if (!_loaded)
             {
                 objectGuid = EditorPrefs.GetString("objectGuid");
-                showSizeInfo = EditorPrefs.GetBool("showSizeInfo");
-                viewSettings = LoadByGUID();
-                prefsLoaded = true;
-            } 
-            
+                ShowSizeInfo = EditorPrefs.GetBool("showSizeInfo");
+                ViewSettings = LoadByGUID();
+                _loaded = true;
+            }
         }
-
-
     }
 }

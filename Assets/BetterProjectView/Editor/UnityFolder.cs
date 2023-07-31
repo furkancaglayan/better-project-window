@@ -1,88 +1,97 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 namespace ProjectViewer
 {
-
     public class UnityFolder
     {
-
-        private string folderPath;
-        private UnityFolder parentFolder;
-
-        private List<UnityFile> child_files;
-        private List<UnityFolder> child_folders;
-        private long size;
+        private string _path;
+        private List<UnityFile> _files;
+        private List<UnityFolder> _subFolders;
+        private long _totalSize;
+        private readonly int _depth;
 
         public string Path
         {
-            get { return folderPath; }
+            get { return _path; }
         }
+
         public long Size
         {
-            get { return size; }
+            get { return _totalSize; }
         }
 
         public int FileCount
         {
-            get { return child_files.Count; }
+            get { return _files.Count; }
         }
 
         public int SubFolderCount
         {
-            get { return child_folders.Count; }
+            get { return _subFolders.Count; }
         }
-        private readonly int depth;
 
 
         public UnityFolder(string folderPath, UnityFolder parentFolder, int depth)
         {
-            this.folderPath = folderPath.Replace('\\','/');
-            this.depth = depth;
-            child_files = FindChildFiles();
-            child_folders = FindChildFolders();
-
-            //Create the object by giving its path. Then get the assetpreview.
-
-
-            //Assets/New Folder-> folderName:New Folder
-
-
-
+            _path = folderPath.Replace('\\', '/');
+            _depth = depth;
+            _files = FindChildFiles();
+            _subFolders = FindSubFolders();
         }
 
-      
-
-        private List<UnityFolder> FindChildFolders()
+        private List<UnityFolder> FindSubFolders()
         {
+            string[] dirs = new string[0];
             //GetDirectories will return all the subfolders in the given path.
-            string[] dirs = Directory.GetDirectories(folderPath);
+            try
+            {
+               dirs = Directory.GetDirectories(_path);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }   
+
             List<UnityFolder> folders = new List<UnityFolder>();
             foreach (var directory in dirs)
             {
-                //Turn all directories into our 'UnityFolder' Object.
-                UnityFolder newfolder = new UnityFolder(directory, this, depth + 1);
+                UnityFolder newfolder = new UnityFolder(directory, this, _depth + 1);
                 folders.Add(newfolder);
-                size += newfolder.size;
+                _totalSize += newfolder._totalSize;
             }
             return folders;
         }
 
         private List<UnityFile> FindChildFiles()
         {
+            string[] fileNames = new string[0];
+            //GetDirectories will return all the subfolders in the given path.
+            try
+            {
+                fileNames = Directory.GetFiles(_path);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+
             //GetFiles is similar but returns all the files under the path(obviously)
-            string[] fileNames = Directory.GetFiles(folderPath);
             List<UnityFile> files = new List<UnityFile>();
             foreach (var file in fileNames)
             {
                 UnityFile newfile = new UnityFile(file, this);
                 //Pass meta files.
                 if (newfile.GetExtension().Equals("meta"))
+                {
                     continue;
+                }
+
                 files.Add(newfile);
-                size += new FileInfo(file).Length;
+                _totalSize += new FileInfo(file).Length;
             }
 
             return files;
@@ -92,26 +101,22 @@ namespace ProjectViewer
 
         public UnityFolder FindFolder(string path)
         {
-           
-
-            if (path.Equals(this.folderPath.Trim()))
-                return this;
-            UnityFolder temp=null;
-            for (int i = 0; i < child_folders.Count;i++ )
+            if (path.Equals(this._path.Trim()))
             {
-                temp= child_folders[i].FindFolder(path);
-                if (temp!=null)
-                    return temp;
+                return this;
             }
 
-            return temp;
+            for (int i = 0; i < _subFolders.Count; i++)
+            {
+                UnityFolder temp = _subFolders[i].FindFolder(path);
+                if (temp != null)
+                {
+                    return temp;
+                }
+            }
+
+            return null;
         }
-       
-
-
-
-
-
     }
 
 }

@@ -1,43 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 namespace ProjectViewer
 {
-
     public class UnityFile
     {
-
-
-        private readonly string extension;
-
-
-
+        private FileInfo _info;
 
         public UnityFile(string path, UnityFolder parentFolder)
         {
-            extension = FindExtension(path);
-
-
-
-
-
+            _info = new FileInfo(path);
         }
 
-        private string FindExtension(string path)
-        {
-            string[] splitPath = path.Split('.');
-            string ext = splitPath[splitPath.Length - 1];
-            return ext;
-        }
         public string GetExtension()
         {
-            return extension;
-
+            return _info?.Extension ?? string.Empty;
         }
-
-
     }
-
 }

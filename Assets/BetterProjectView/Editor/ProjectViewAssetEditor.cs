@@ -6,7 +6,6 @@ using UnityEngine;
 [CustomEditor(typeof(ProjectViewer.ProjectViewSettings))]
 public class ProjectViewAssetEditor : Editor {
 
-
     public override void OnInspectorGUI()
     {
         var projectViewSettings = (ProjectViewer.ProjectViewSettings) target;
