@@ -101,23 +101,19 @@ namespace ProjectViewer
 
             if (r.height > 16)
             {
-                EditorApplication.RepaintProjectWindow();
-                GUI.BeginGroup(r); GUI.EndGroup();
                 GUI.color = col;
-                GUI.DrawTexture(r, texture);
+                var textHeigth = GUI.skin.font.fontSize;
+                GUI.DrawTexture(new Rect(new Vector2(r.x + 1, r.y), new Vector2(r.width, r.height - textHeigth)), texture);
                 GUI.color = Color.white;
             }
             else
             {
-
                 UnityFolder folder = Assets.FindFolder(fileName);
                 if (folder == null)
                     return;
                 GUI.color = col;
-                GUI.BeginGroup(r);
-                GUI.DrawTexture(new Rect(new Vector2(r.width - 20, 0), new Vector2(16, 16)), texture);
+                GUI.DrawTexture(new Rect(new Vector2(r.x + 1, r.y), new Vector2(r.height, r.height)), texture);
                 GUI.color = Color.white;
-                GUI.EndGroup();
             }
 
         }
@@ -126,7 +122,6 @@ namespace ProjectViewer
         {
             if (r.height <= 16)
             {
-
                 UnityFolder folder = Assets.FindFolder(fileName);
                 if (folder == null)
                     return;
@@ -136,11 +131,6 @@ namespace ProjectViewer
                 GUI.BeginGroup(r);
                 GUI.color = col;
 
-                if (texture != null)
-                {
-                    GUI.DrawTexture(new Rect(new Vector2(r.width - 20, 0), new Vector2(16, 16)), texture);
-                }
-
                 if (ProjectViewPreferences.ShowSizeInfo)
                 {
                     if (!EditorGUIUtility.isProSkin)
@@ -149,8 +139,11 @@ namespace ProjectViewer
                     if (folder.FileCount > 0 || folder.SubFolderCount > 0)
                     {
 
+                        var sizeFormat = GetSizeFormat(folder.Size);
+                        var sizeText = GUI.skin.label.CalcSize(new GUIContent(sizeFormat));
+                        var controlRect = EditorGUILayout.GetControlRect();
                         GUI.Label(new Rect(new Vector2(r.width - 100, 0), new Vector2(200, 16)),
-                            GetSizeFormat(folder.Size), EditorStyles.whiteMiniLabel);
+                            sizeFormat, EditorStyles.whiteMiniLabel);
 
                     }
                     else
